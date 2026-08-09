@@ -1,0 +1,125 @@
+<section class="panel">
+  <header class="panel-header">
+    <div>
+      <h2>Painel Monitoramento</h2>
+      <p class="subtitle">Preços e concorrência na Amazon (Selling Partner API)</p>
+    </div>
+
+    <div class="summary-cards">
+      <div class="card">
+        <span class="card-value">{{ summary().total }}</span>
+        <span class="card-label">Produtos</span>
+      </div>
+      <div class="card card-success">
+        <span class="card-value">{{ summary().winning }}</span>
+        <span class="card-label">Ganhando</span>
+      </div>
+      <div class="card card-danger">
+        <span class="card-value">{{ summary().losing }}</span>
+        <span class="card-label">Perdendo</span>
+      </div>
+      <div class="card card-warning">
+        <span class="card-value">{{ summary().toLower }}</span>
+        <span class="card-label">Baixar Preço</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <input
+      type="search"
+      placeholder="Buscar por ASIN, produto ou marca..."
+      [ngModel]="searchTerm()"
+      (ngModelChange)="searchTerm.set($event)"
+    />
+
+    <div class="filter-buttons">
+      <button
+        type="button"
+        [class.active]="statusFilter() === 'TODOS'"
+        (click)="statusFilter.set('TODOS')"
+      >
+        Todos
+      </button>
+      <button
+        type="button"
+        [class.active]="statusFilter() === 'GANHANDO'"
+        (click)="statusFilter.set('GANHANDO')"
+      >
+        Ganhando
+      </button>
+      <button
+        type="button"
+        [class.active]="statusFilter() === 'PERDENDO'"
+        (click)="statusFilter.set('PERDENDO')"
+      >
+        Perdendo
+      </button>
+    </div>
+
+    <button type="button" class="btn-refresh" (click)="loadRows()">Atualizar Tudo</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Carregando dados de preços...</div>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ASIN</th>
+            <th>Marca</th>
+            <th>Produto</th>
+            <th class="num">Estoque</th>
+            <th class="num">Dias sem Venda</th>
+            <th class="num">Meu Preço</th>
+            <th class="num">Margem Ativa</th>
+            <th class="num">Margem p/ Ganhar</th>
+            <th class="num">Preço Amazon</th>
+            <th class="num">Diferença</th>
+            <th>Ação Recomendada</th>
+            <th>Status</th>
+            <th>Ganhador</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of filteredRows(); track row.asin) {
+            <tr>
+              <td class="mono">{{ row.asin }}</td>
+              <td>{{ row.brand }}</td>
+              <td class="product-cell" [title]="row.product">{{ row.product }}</td>
+              <td class="num">{{ row.stock }}</td>
+              <td class="num">{{ row.daysWithoutSale }}</td>
+              <td class="num">{{ row.myPrice | currency: 'BRL' }}</td>
+              <td class="num" [ngClass]="marginClass(row.activeMargin)">
+                {{ row.activeMargin | number: '1.2-2' }}%
+              </td>
+              <td class="num" [ngClass]="marginClass(row.marginToWin)">
+                {{ row.marginToWin | number: '1.2-2' }}%
+              </td>
+              <td class="num">{{ row.amazonPrice | currency: 'BRL' }}</td>
+              <td class="num" [ngClass]="diffClass(row.priceDifference)">
+                {{ row.priceDifference | currency: 'BRL' }}
+              </td>
+              <td>
+                <span class="badge" [ngClass]="actionClass(row.recommendedAction)">
+                  {{ row.recommendedAction }}
+                </span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="statusClass(row.status)">
+                  {{ row.status }}
+                </span>
+              </td>
+              <td>{{ row.winner }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="13" class="empty">Nenhum produto encontrado.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

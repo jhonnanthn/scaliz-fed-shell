@@ -1,0 +1,234 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    color: #64748b;
+    font-size: 0.85rem;
+  }
+}
+
+.summary-cards {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.card {
+  min-width: 100px;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: #f1f5f9;
+  text-align: center;
+
+  .card-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .card-label {
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  &.card-success .card-value { color: var(--scaliz-teal, #34d399); }
+  &.card-danger .card-value { color: #dc2626; }
+  &.card-warning .card-value { color: var(--scaliz-purple, #8b5cf6); }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+
+  input[type='search'] {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+
+    button {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      white-space: nowrap;
+
+      &.active {
+        background: #1e293b;
+        color: #fff;
+        border-color: #1e293b;
+      }
+    }
+  }
+
+  .btn-refresh {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #facc15;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background: #eab308;
+    }
+  }
+}
+
+.loading,
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--scaliz-bg-dark, #16181d);
+    color: #fff;
+    padding: 0.6rem 0.7rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: #f5f3ff;
+  }
+
+  .product-cell {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mono {
+    font-family: 'Courier New', monospace;
+  }
+
+  .num {
+    text-align: right;
+  }
+}
+
+.cell-success { color: var(--scaliz-teal, #34d399); font-weight: 600; }
+.cell-warning { color: #d97706; font-weight: 600; }
+.cell-danger { color: #dc2626; font-weight: 600; }
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.badge-success { background: #d1fae5; color: #047857; }
+  &.badge-danger { background: #fee2e2; color: #b91c1c; }
+  &.badge-warning { background: #fef3c7; color: #a16207; }
+  &.badge-neutral { background: #ede9fe; color: #6d28d9; }
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 1rem;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-cards {
+    width: 100%;
+    flex-wrap: wrap;
+
+    .card {
+      flex: 1 1 calc(50% - 0.75rem);
+      min-width: 0;
+    }
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+
+    input[type='search'] {
+      width: 100%;
+    }
+
+    .filter-buttons {
+      width: 100%;
+
+      button {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    .btn-refresh {
+      width: 100%;
+    }
+  }
+
+  table {
+    font-size: 0.8rem;
+
+    .product-cell {
+      max-width: 160px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-cards .card {
+    flex: 1 1 100%;
+  }
+}

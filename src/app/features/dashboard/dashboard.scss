@@ -1,0 +1,37 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.panel-header {
+  h2 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    color: #64748b;
+    font-size: 0.85rem;
+  }
+}
+
+.placeholder {
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 3rem;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 1rem;
+  }
+
+  .placeholder {
+    padding: 2rem 1rem;
+  }
+}
