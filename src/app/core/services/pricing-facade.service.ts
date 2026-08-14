@@ -33,7 +33,7 @@ export class PricingFacadeService {
     const requests: CompetitiveSummaryRequestItem[] = asins.map((asin) => ({
       asin,
       marketplaceId: environment.marketplaceId,
-      includedData: ['featuredBuyingOptions', 'referencePrices', 'lowestPricedOffers'],
+      includedData: ['featuredBuyingOptions', 'referencePrices', 'lowestPricedOffers', 'similarItems'],
       lowestPricedOffersInputs: [
         { itemCondition: 'New', offerType: 'Consumer' },
         { itemCondition: 'Used', offerType: 'Consumer' }
