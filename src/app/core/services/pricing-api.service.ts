@@ -48,7 +48,7 @@ export class PricingApiService {
       .filter((asin) => asin.length > 0)
       .map((asin) => asin.toUpperCase());
 
-    return this.http.post<CompetitiveSummaryApiResponse>(`${this.baseUrl}/v1/pricing/competitive-summary`, {
+    return this.http.post<CompetitiveSummaryApiResponse>(`${this.baseUrl}/pricing/competitive-summary`, {
       asins: normalized
     });
   }
