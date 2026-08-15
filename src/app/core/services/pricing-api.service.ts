@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   CatalogItemsResponse,
+  CompetitiveSummaryApiResponse,
   CompetitiveSummaryBatchRequest,
   CompetitiveSummaryBatchResponse
 } from '../models/pricing.model';
@@ -39,6 +40,17 @@ export class PricingApiService {
       `${this.baseUrl}/pricing/competitive-summary`,
       request
     );
+  }
+
+  getCompetitiveSummaryByAsins(asins: string[]): Observable<CompetitiveSummaryApiResponse> {
+    const normalized = asins
+      .map((asin) => asin.trim())
+      .filter((asin) => asin.length > 0)
+      .map((asin) => asin.toUpperCase());
+
+    return this.http.post<CompetitiveSummaryApiResponse>(`${this.baseUrl}/v1/pricing/competitive-summary`, {
+      asins: normalized
+    });
   }
 
   /**

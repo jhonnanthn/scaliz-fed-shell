@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PricingApiService } from './pricing-api.service';
 import { MockPricingService } from './mock-pricing.service';
@@ -19,56 +19,60 @@ export class PricingFacadeService {
   private readonly api = inject(PricingApiService);
   private readonly mock = inject(MockPricingService);
 
-  getMonitoringRows(): Observable<PriceMonitoringRow[]> {
+  getMonitoringRows(asins: string[] = []): Observable<PriceMonitoringRow[]> {
+    if (environment.useMock && asins.length === 0) {
+      return this.mock.getMonitoringRows();
+    }
+
     if (environment.useMock) {
       return this.mock.getMonitoringRows();
     }
-    return this.getMonitoringRowsFromApi();
+
+    const normalized = this.normalizeAsins(asins);
+    if (!normalized.length) {
+      return of([]);
+    }
+
+    return this.getMonitoringRowsFromApi(normalized);
   }
 
   /** Monta o request batch da SP-API para uma lista de ASINs e mapeia a resposta. */
-  private getMonitoringRowsFromApi(): Observable<PriceMonitoringRow[]> {
-    const asins = ['B00ZIAODGE']; // TODO: substituir pela lista real de SKUs/ASINs do catálogo
-
-    const requests: CompetitiveSummaryRequestItem[] = asins.map((asin) => ({
-      asin,
-      marketplaceId: environment.marketplaceId,
-      includedData: ['featuredBuyingOptions', 'referencePrices', 'lowestPricedOffers', 'similarItems'],
-      lowestPricedOffersInputs: [
-        { itemCondition: 'New', offerType: 'Consumer' },
-        { itemCondition: 'Used', offerType: 'Consumer' }
-      ],
-      uri: '/products/pricing/2022-05-01/items/competitiveSummary',
-      method: 'GET'
-    }));
-
-    const batchRequest: CompetitiveSummaryBatchRequest = { requests };
-
-    return this.api.getCompetitiveSummary(batchRequest).pipe(
+  private getMonitoringRowsFromApi(asins: string[]): Observable<PriceMonitoringRow[]> {
+    return this.api.getCompetitiveSummaryByAsins(asins).pipe(
       map((response) =>
-        response.responses.map((result): PriceMonitoringRow => {
-          const buyBox = result.lowestPricedOffers?.[0]?.lowestPrice?.listingPrice.amount ?? 0;
-          const myOffer = result.featuredBuyingOptions?.[0]?.segmentedFeaturedOffers?.[0];
-          const myPrice = myOffer?.price.listingPrice.amount ?? 0;
-          const priceDifference = Number((myPrice - buyBox).toFixed(2));
+        response.items.map((item): PriceMonitoringRow => {
+          const listingPrice = item.listingPrice?.amount ?? 0;
+          const buyBoxPrice = item.buyBox?.price?.amount ?? item.lowestPrice?.price?.amount ?? 0;
+          const myPrice = listingPrice || buyBoxPrice;
+          const amazonPrice = buyBoxPrice || listingPrice || 0;
+          const priceDifference = Number((myPrice - amazonPrice).toFixed(2));
+          const status: PriceMonitoringRow['status'] =
+            myPrice > 0 && priceDifference > 0 ? 'PERDENDO' : 'GANHANDO';
+          const recommendedAction: PriceMonitoringRow['recommendedAction'] =
+            myPrice > 0 && priceDifference > 0 ? 'Baixar Preço' : 'Manter Preço';
 
           return {
-            asin: result.asin,
-            brand: 'Não encontrado',
-            product: result.asin,
+            asin: item.asin ?? 'Não Informado',
+            brand: item.brand ?? 'Não Informado',
+            product: item.title ?? 'Não Informado',
+            imageUrl: item.imageUrl ?? '',
             stock: 0,
             daysWithoutSale: 0,
             myPrice,
             activeMargin: 0,
             marginToWin: 0,
-            amazonPrice: buyBox,
+            amazonPrice,
             priceDifference,
-            recommendedAction: priceDifference > 0 ? 'Baixar Preço' : 'Manter Preço',
-            status: priceDifference > 0 ? 'PERDENDO' : 'GANHANDO',
-            winner: myOffer?.sellerId ?? 'Amazon.com.br'
+            recommendedAction,
+            status,
+            winner: item.buyBox?.sellerId ?? item.lowestPrice?.sellerId ?? 'Não Informado'
           };
         })
       )
     );
+  }
+
+  private normalizeAsins(asins: string[]): string[] {
+    return [...new Set(asins.map((asin) => asin.trim().toUpperCase()).filter(Boolean))];
   }
 }

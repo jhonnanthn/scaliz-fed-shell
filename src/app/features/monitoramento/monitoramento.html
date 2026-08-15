@@ -26,38 +26,50 @@
   </header>
 
   <div class="toolbar">
-    <input
-      type="search"
-      placeholder="Buscar por ASIN, produto ou marca..."
-      [ngModel]="searchTerm()"
-      (ngModelChange)="searchTerm.set($event)"
-    />
-
-    <div class="filter-buttons">
-      <button
-        type="button"
-        [class.active]="statusFilter() === 'TODOS'"
-        (click)="statusFilter.set('TODOS')"
-      >
-        Todos
-      </button>
-      <button
-        type="button"
-        [class.active]="statusFilter() === 'GANHANDO'"
-        (click)="statusFilter.set('GANHANDO')"
-      >
-        Ganhando
-      </button>
-      <button
-        type="button"
-        [class.active]="statusFilter() === 'PERDENDO'"
-        (click)="statusFilter.set('PERDENDO')"
-      >
-        Perdendo
-      </button>
+    <div class="asin-form">
+      <label class="sr-only" for="asin-input">ASINs</label>
+      <textarea
+        id="asin-input"
+        rows="3"
+        placeholder="B004V54ZVK, B09SMBB1KN"
+        [ngModel]="asinsInput()"
+        (ngModelChange)="asinsInput.set($event)"
+      ></textarea>
+      <button type="button" class="btn-refresh" (click)="loadRows()">Consultar ASINs</button>
     </div>
 
-    <button type="button" class="btn-refresh" (click)="loadRows()">Atualizar Tudo</button>
+    <div class="filter-tools">
+      <input
+        type="search"
+        placeholder="Buscar por ASIN, produto ou marca..."
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+      />
+
+      <div class="filter-buttons">
+        <button
+          type="button"
+          [class.active]="statusFilter() === 'TODOS'"
+          (click)="statusFilter.set('TODOS')"
+        >
+          Todos
+        </button>
+        <button
+          type="button"
+          [class.active]="statusFilter() === 'GANHANDO'"
+          (click)="statusFilter.set('GANHANDO')"
+        >
+          Ganhando
+        </button>
+        <button
+          type="button"
+          [class.active]="statusFilter() === 'PERDENDO'"
+          (click)="statusFilter.set('PERDENDO')"
+        >
+          Perdendo
+        </button>
+      </div>
+    </div>
   </div>
 
   @if (loading()) {
@@ -86,32 +98,32 @@
           @for (row of filteredRows(); track row.asin) {
             <tr>
               <td class="mono">{{ row.asin }}</td>
-              <td>{{ row.brand }}</td>
-              <td class="product-cell" [title]="row.product">{{ row.product }}</td>
-              <td class="num">{{ row.stock }}</td>
-              <td class="num">{{ row.daysWithoutSale }}</td>
-              <td class="num">{{ row.myPrice | currency: 'BRL' }}</td>
+              <td>{{ displayValue(row.brand) }}</td>
+              <td class="product-cell" [title]="row.product">{{ displayValue(row.product) }}</td>
+              <td class="num">{{ row.stock > 0 ? row.stock : 'Não Informado' }}</td>
+              <td class="num">{{ row.daysWithoutSale > 0 ? row.daysWithoutSale : 'Não Informado' }}</td>
+              <td class="num">{{ row.myPrice ? (row.myPrice | currency: 'BRL') : 'Não Informado' }}</td>
               <td class="num" [ngClass]="marginClass(row.activeMargin)">
-                {{ row.activeMargin | number: '1.2-2' }}%
+                {{ row.activeMargin ? (row.activeMargin | number: '1.2-2') + '%' : 'Não Informado' }}
               </td>
               <td class="num" [ngClass]="marginClass(row.marginToWin)">
-                {{ row.marginToWin | number: '1.2-2' }}%
+                {{ row.marginToWin ? (row.marginToWin | number: '1.2-2') + '%' : 'Não Informado' }}
               </td>
-              <td class="num">{{ row.amazonPrice | currency: 'BRL' }}</td>
+              <td class="num">{{ row.amazonPrice ? (row.amazonPrice | currency: 'BRL') : 'Não Informado' }}</td>
               <td class="num" [ngClass]="diffClass(row.priceDifference)">
-                {{ row.priceDifference | currency: 'BRL' }}
+                {{ row.priceDifference ? (row.priceDifference | currency: 'BRL') : 'Não Informado' }}
               </td>
               <td>
                 <span class="badge" [ngClass]="actionClass(row.recommendedAction)">
-                  {{ row.recommendedAction }}
+                  {{ displayValue(row.recommendedAction) }}
                 </span>
               </td>
               <td>
                 <span class="badge" [ngClass]="statusClass(row.status)">
-                  {{ row.status }}
+                  {{ displayValue(row.status) }}
                 </span>
               </td>
-              <td>{{ row.winner }}</td>
+              <td>{{ displayValue(row.winner) }}</td>
             </tr>
           } @empty {
             <tr>

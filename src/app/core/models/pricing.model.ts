@@ -82,6 +82,34 @@ export interface CompetitiveSummaryBatchResponse {
   responses: CompetitiveSummaryResult[];
 }
 
+/** Resposta direta do endpoint /v1/pricing/competitive-summary */
+export interface CompetitiveSummaryApiPrice {
+  amount: number;
+  currencyCode: string;
+}
+
+export interface CompetitiveSummaryApiPriceEntry {
+  price?: CompetitiveSummaryApiPrice;
+  sellerId?: string;
+  fulfillmentType?: string;
+}
+
+export interface CompetitiveSummaryApiItem {
+  asin: string;
+  title?: string;
+  brand?: string;
+  imageUrl?: string;
+  marketplaceId?: string;
+  status?: string;
+  listingPrice?: CompetitiveSummaryApiPrice;
+  buyBox?: CompetitiveSummaryApiPriceEntry;
+  lowestPrice?: CompetitiveSummaryApiPriceEntry;
+}
+
+export interface CompetitiveSummaryApiResponse {
+  items: CompetitiveSummaryApiItem[];
+}
+
 /** Item resumido retornado pelo Catalog Items API */
 export interface CatalogItemSummary {
   marketplaceId: string;

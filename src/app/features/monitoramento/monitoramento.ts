@@ -20,6 +20,7 @@ export class Monitoramento {
   protected readonly loading = signal(true);
   protected readonly searchTerm = signal('');
   protected readonly statusFilter = signal<StatusFilter>('TODOS');
+  protected readonly asinsInput = signal('B004V54ZVK, B09SMBB1KN');
 
   protected readonly filteredRows = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
@@ -49,14 +50,37 @@ export class Monitoramento {
   }
 
   protected loadRows(): void {
+    const asins = this.parseAsins(this.asinsInput());
     this.loading.set(true);
-    this.pricingFacade.getMonitoringRows().subscribe({
+    this.pricingFacade.getMonitoringRows(asins).subscribe({
       next: (rows) => {
         this.rows.set(rows);
         this.loading.set(false);
       },
-      error: () => this.loading.set(false)
+      error: () => {
+        this.rows.set([]);
+        this.loading.set(false);
+      }
     });
+  }
+
+  protected parseAsins(rawValue: string): string[] {
+    return rawValue
+      .split(/[\n,]+/)
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
+  }
+
+  protected displayValue(value: string | number | undefined | null, fallback = 'Não Informado'): string {
+    if (value === undefined || value === null || value === '') {
+      return fallback;
+    }
+
+    if (typeof value === 'number' && Number.isNaN(value)) {
+      return fallback;
+    }
+
+    return String(value);
   }
 
   protected marginClass(value: number): string {
