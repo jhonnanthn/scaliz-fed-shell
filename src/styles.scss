@@ -31,6 +31,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
 }
 
 body {
@@ -40,4 +43,5 @@ body {
   color: #1e293b;
   background: #f8fafc;
   accent-color: var(--scaliz-purple);
+  overscroll-behavior: none;
 }
