@@ -6,7 +6,6 @@
     radial-gradient(circle at 82% 0%, rgba(52, 211, 153, 0.12), transparent 24%),
     url('/assets/PlanoDeFundo.jpg') center/cover no-repeat;
   color: #f8fafc;
-  overflow: hidden;
 }
 
 .topbar {
@@ -17,6 +16,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+}
+
+.nav-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-left: auto;
 }
 
 .brand {
@@ -39,8 +46,8 @@
   display: flex;
   align-items: center;
   gap: 30px;
-  margin-left: auto;
-  margin-right: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .main-nav a {
@@ -71,6 +78,7 @@
   font-weight: 700;
   box-shadow: 0 10px 30px rgba(96, 165, 250, 0.2);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .page-shell {
@@ -83,15 +91,21 @@
   .topbar {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 14px;
+  }
+
+  .nav-group {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
   }
 
   .main-nav {
-    order: 3;
     width: 100%;
     justify-content: center;
-    margin: 0;
-    flex-wrap: wrap;
     gap: 14px 22px;
+    margin: 0;
   }
 }
 
@@ -101,8 +115,22 @@
     justify-content: space-between;
   }
 
+  .nav-group {
+    width: auto;
+    flex: 1;
+    align-items: flex-end;
+  }
+
   .main-nav {
-    display: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.82rem;
+  }
+
+  .main-nav a {
+    font-size: 0.8rem;
   }
 
   .brand-logo {
@@ -120,12 +148,25 @@
     gap: 12px;
   }
 
+  .nav-group {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .main-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 10px 16px;
+    text-align: center;
+  }
+
   .brand-logo {
     height: 38px;
   }
 
   .trial-button {
-    width: auto;
+    width: 100%;
     min-width: 0;
     flex: 0 0 auto;
   }

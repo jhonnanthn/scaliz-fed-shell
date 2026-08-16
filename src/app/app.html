@@ -4,17 +4,21 @@
       <img class="brand-logo" src="/assets/scaliz-logo.png" alt="Scaliz" />
     </div>
 
-    <nav class="main-nav" aria-label="Navegação principal">
-      <a href="#">Ferramentas <span class="caret">⌄</span></a>
-      <a routerLink="/monitoramento">Integrações</a>
-      <a href="#">Preços</a>
-      <a href="#">Login</a>
-    </nav>
+    <div class="nav-group">
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="#">Ferramentas <span class="caret">⌄</span></a>
+        <a routerLink="/monitoramento">Integrações</a>
+        <a href="#">Preços</a>
+        <a href="#">Login</a>
+      </nav>
 
-    <button type="button" class="trial-button" routerLink="/monitoramento">Teste Grátis</button>
+      <button type="button" class="trial-button" routerLink="/monitoramento">Teste Grátis</button>
+    </div>
   </header>
 
   <main class="page-shell">
     <router-outlet />
   </main>
+
+  <app-scaliz-footer />
 </div>
