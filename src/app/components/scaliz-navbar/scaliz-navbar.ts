@@ -8,4 +8,20 @@ import { RouterLink } from '@angular/router';
   templateUrl: './scaliz-navbar.html',
   styleUrl: './scaliz-navbar.scss'
 })
-export class ScalizNavbarComponent {}
+export class ScalizNavbarComponent {
+  mobileMenuOpen = false;
+  resourcesMenuOpen = false;
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+    this.resourcesMenuOpen = false;
+  }
+
+  toggleResourcesMenu(): void {
+    this.resourcesMenuOpen = !this.resourcesMenuOpen;
+  }
+}
