@@ -52,6 +52,22 @@
   box-shadow: 0 10px 22px rgba(90, 133, 255, 0.14);
 }
 
+.trial-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 14px;
+  margin-left: .5rem;
+  color: rgba(148, 163, 184, 0.9);
+  font-size: 0.8rem;
+  letter-spacing: -0.02em;
+}
+
+.trial-info i {
+  color: #34d399;
+  font-size: 1rem;
+}
+
 @media (max-width: 1100px) {
   .dashboard-page {
     grid-template-columns: 1fr;

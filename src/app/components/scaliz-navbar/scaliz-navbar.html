@@ -1,0 +1,67 @@
+<header class="scaliz-navbar">
+  <div class="navbar-inner">
+    <div class="brand" routerLink="/dashboard" aria-label="Scaliz home">
+      <img class="brand-logo" src="/assets/scaliz-logo.png" alt="Scaliz" />
+    </div>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <div class="nav-dropdown resources-dropdown">
+        <button type="button" class="nav-trigger" aria-label="Abrir recursos">
+          <span>Recursos</span>
+          <span class="nav-chevron" aria-hidden="true"></span>
+        </button>
+
+        <div class="resources-menu" role="menu" aria-label="Recursos disponíveis">
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/profits.png" alt="Margens e Lucratividade" />
+            <div class="resource-copy">
+              <strong>Margens &amp; Lucratividade</strong>
+              <span>Veja o lucro real de cada produto.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/shopping-cart.png" alt="Buy Box" />
+            <div class="resource-copy">
+              <strong>Buy Box</strong>
+              <span>Monitore sua posição nos marketplaces.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/group.png" alt="Concorrência" />
+            <div class="resource-copy">
+              <strong>Concorrência</strong>
+              <span>Acompanhe preços e seus principais concorrentes.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/box.png" alt="Produtos" />
+            <div class="resource-copy">
+              <strong>Produtos</strong>
+              <span>Gerencie e analise seu catálogo.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/dashboard.png" alt="Dashboard & Indicadores" />
+              <div class="resource-copy">
+                <strong>Dashboard & Indicadores</strong>
+                <span>Acompanhe seus resultados em tempo real.</span>
+            </div>
+          </div>
+
+          <hr />
+          <a href="#" class="resource-view-all">Ver todos os recursos <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <a routerLink="/monitoramento">Integrações</a>
+      <a href="#">Preços</a>
+      <a href="#">Login</a>
+    </nav>
+
+    <button type="button" class="trial-button" routerLink="/monitoramento">Teste Grátis</button>
+  </div>
+</header>
