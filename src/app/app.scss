@@ -1,9 +1,10 @@
 .scaliz-shell {
   min-height: 100vh;
   background:
+    linear-gradient(180deg, rgba(16, 18, 21, 0.72), rgba(16, 18, 21, 0.87)),
     radial-gradient(circle at 20% 10%, rgba(161, 125, 255, 0.18), transparent 22%),
     radial-gradient(circle at 82% 0%, rgba(52, 211, 153, 0.12), transparent 24%),
-    linear-gradient(180deg, #181d22 0%, #1d2128 16%, #171b20 100%);
+    url('/assets/PlanoDeFundo.jpg') center/cover no-repeat;
   color: #f8fafc;
   overflow: hidden;
 }
