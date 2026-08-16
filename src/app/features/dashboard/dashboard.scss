@@ -64,7 +64,7 @@
 }
 
 .trial-info i {
-  color: #34d399;
+  color: hsl(149, 78%, 33%);
   font-size: 1rem;
 }
 
@@ -121,6 +121,17 @@
     font-size: 1rem;
     line-height: 1.45;
     margin-top: 16px;
+  }
+
+  
+  .trial-info {
+    display: inline;
+    order: 3;
+  }
+
+  .trial-info i {
+    color: hsl(149, 78%, 33%);
+    font-size: 1rem;
   }
 
 }

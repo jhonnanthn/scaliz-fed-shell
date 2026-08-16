@@ -1,6 +1,6 @@
 <header class="scaliz-navbar">
   <div class="navbar-inner">
-    <div class="brand" routerLink="/dashboard" aria-label="Scaliz home">
+    <div class="brand" routerLink="/" aria-label="Scaliz home">
       <img class="brand-logo" src="/assets/scaliz-logo.png" alt="Scaliz" />
     </div>
 
@@ -16,7 +16,7 @@
       <span></span>
     </button>
 
-    <nav class="main-nav" [class.is-open]="mobileMenuOpen" aria-label="Navegação principal">
+    <nav class="main-nav" aria-label="Navegação principal">
       <div class="nav-dropdown resources-dropdown" [class.is-open]="resourcesMenuOpen">
         <button
           type="button"
@@ -75,11 +75,97 @@
         </div>
       </div>
 
-      <a routerLink="/monitoramento" (click)="closeMobileMenu()">Integrações</a>
       <a href="#" (click)="closeMobileMenu()">Preços</a>
-      <a href="#" (click)="closeMobileMenu()">Login</a>
+      <a routerLink="/monitoramento" (click)="closeMobileMenu()">Suporte</a>
     </nav>
 
-    <button type="button" class="trial-button" routerLink="/monitoramento">Teste Grátis</button>
+    <div class="header-actions" aria-label="Ações da conta">
+      <button type="button" class="trial-button">Teste Grátis</button>
+      <span class="header-action-divider" aria-hidden="true"></span>
+      <button type="button" class="btn-login" routerLink="/"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+    </div>
   </div>
+
+  <div
+    class="mobile-backdrop"
+    [class.is-open]="mobileMenuOpen"
+    aria-hidden="true"
+    (click)="closeMobileMenu()"
+  ></div>
+
+  <aside class="mobile-sidebar" [class.is-open]="mobileMenuOpen" aria-label="Menu mobile">
+    <div class="mobile-sidebar-header">
+      <div class="brand" routerLink="/" aria-label="Scaliz home">
+        <img class="brand-logo" src="/assets/scaliz-logo.png" alt="Scaliz" />
+      </div>
+
+      <button type="button" class="mobile-close" aria-label="Fechar menu" (click)="closeMobileMenu()">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Menu mobile">
+      <div class="mobile-group">
+        <button
+          type="button"
+          class="mobile-nav-item mobile-nav-trigger"
+          [attr.aria-expanded]="resourcesMenuOpen"
+          (click)="toggleResourcesMenu()"
+        >
+          <span>Recursos</span>
+          <span class="mobile-nav-chevron" aria-hidden="true"></span>
+        </button>
+
+        <div class="mobile-submenu" [class.is-open]="resourcesMenuOpen">
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/profits.png" alt="Margens e Lucratividade" />
+            <div class="resource-copy">
+              <p class="m-0">Margens &amp; Lucratividade</p>
+              <span>Veja o lucro real de cada produto.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/shopping-cart.png" alt="Buy Box" />
+            <div class="resource-copy">
+              <p class="m-0">Buy Box</p>
+              <span>Monitore sua posição nos marketplaces.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/group.png" alt="Concorrência" />
+            <div class="resource-copy">
+              <p class="m-0">Concorrência</p>
+              <span>Acompanhe preços e seus principais concorrentes.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/box.png" alt="Produtos" />
+            <div class="resource-copy">
+              <p class="m-0">Produtos</p>
+              <span>Gerencie e analise seu catálogo.</span>
+            </div>
+          </div>
+
+          <div class="resource-item" role="menuitem">
+            <img class="resource-icon" src="/assets/icons/dashboard.png" alt="Dashboard & Indicadores" />
+            <div class="resource-copy">
+              <p class="m-0">Dashboard &amp; Indicadores</p>
+              <span>Acompanhe seus resultados em tempo real.</span>
+            </div>
+          </div>
+
+          <hr />
+          <a href="#" class="resource-view-all" (click)="closeMobileMenu()">Ver todos os recursos <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <a class="mobile-nav-item" routerLink="/monitoramento" (click)="closeMobileMenu()">Integrações</a>
+      <a class="mobile-nav-item" href="#" (click)="closeMobileMenu()">Preços</a>
+      <a class="mobile-nav-item" href="#" (click)="closeMobileMenu()">Login</a>
+    </nav>
+  </aside>
 </header>
