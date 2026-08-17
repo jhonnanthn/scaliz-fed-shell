@@ -26,4 +26,13 @@ export class ScalizNavbarComponent {
   toggleResourcesMenu(): void {
     this.resourcesMenuOpen = !this.resourcesMenuOpen;
   }
+
+  navigateToSection(sectionId: string): void {
+    this.closeMobileMenu();
+    const section = document.getElementById(sectionId);
+
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

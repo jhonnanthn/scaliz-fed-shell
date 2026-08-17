@@ -23,7 +23,7 @@
           class="nav-trigger"
           aria-label="Abrir recursos"
           [attr.aria-expanded]="resourcesMenuOpen"
-          (click)="toggleResourcesMenu()"
+          (click)="toggleResourcesMenu(); navigateToSection('recursos')"
         >
           <span>Recursos</span>
           <span class="nav-chevron" aria-hidden="true"></span>
@@ -71,11 +71,11 @@
           </div>
 
           <hr />
-          <a href="#" class="resource-view-all" (click)="closeMobileMenu()">Ver todos os recursos <span aria-hidden="true">→</span></a>
+          <a href="#recursos" class="resource-view-all" (click)="navigateToSection('recursos')">Ver todos os recursos <span aria-hidden="true">→</span></a>
         </div>
       </div>
 
-      <a href="#" (click)="closeMobileMenu()">Preços</a>
+      <a href="#precos" (click)="navigateToSection('investimento')">Investimento</a>
       <a routerLink="/monitoramento" (click)="closeMobileMenu()">Suporte</a>
     </nav>
 
@@ -164,7 +164,7 @@
       </div>
 
       <a class="mobile-nav-item" routerLink="/monitoramento" (click)="closeMobileMenu()">Integrações</a>
-      <a class="mobile-nav-item" href="#" (click)="closeMobileMenu()">Preços</a>
+      <a class="mobile-nav-item" href="#precos" (click)="navigateToSection('investimento')">Investimento</a>
       <a class="mobile-nav-item" href="#" (click)="closeMobileMenu()">Login</a>
     </nav>
   </aside>
